@@ -1,7 +1,7 @@
 ﻿---
 layout: post
 title: "Day 08: Automating the Blog"
-date: 2025-12-18
+date: 2025-12-17
 ---
 
 # 🤖 Lazy Mode Engaged
