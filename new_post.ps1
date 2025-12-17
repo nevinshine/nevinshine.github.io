@@ -5,7 +5,7 @@ $rawTitle = Read-Host "Enter Title (e.g., Automating the Blog)"
 # 2. Calculate Variables
 $currentDate = Get-Date -Format "yyyy-MM-dd"
 $cleanTitle = $rawTitle.ToLower().Replace(" ", "-").Replace(",", "")
-$filename = "_posts/$currentDate-day-$dayNum-$cleanTitle.md"
+$filename = "_posts/$currentDate-day-$dayNum-$cleanTitle.md" 
 
 # 3. Create Template (Clean, Safe Text only)
 # We use ${dayNum} to safely insert the variable
