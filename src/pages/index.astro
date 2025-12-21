@@ -1,49 +1,42 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+    <head>
+        <BaseHead title="Nevin Shine | Researcher" description="System Security & AI" />
+    </head>
+    <body class="bg-black text-green-500 font-mono h-screen flex flex-col items-center justify-center">
+
+        <div class="border border-green-700 p-10 rounded-lg shadow-[0_0_20px_rgba(0,255,0,0.2)] bg-opacity-10 bg-green-900 max-w-2xl w-full">
+
+            <div class="flex justify-between text-xs text-green-800 mb-6 border-b border-green-800 pb-2">
+                <span>USER: NEVIN_SHINE</span>
+                <span>SYS_TIME: SUNDAY_DAY_09</span>
+            </div>
+
+            <h1 class="text-5xl font-bold mb-2 tracking-tighter">NEVIN SHINE</h1>
+            <p class="text-xl text-gray-400 mb-8">Junior Researcher // <span class="text-green-400">System Security</span></p>
+
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <span class="text-green-500">➜</span>
+                    <span class="text-gray-300">Current Focus:</span>
+                    <span class="bg-green-900 text-green-300 px-2 py-0.5 text-sm rounded">Weightless Neural Networks</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-green-500">➜</span>
+                    <span class="text-gray-300">Status:</span>
+                    <span class="animate-pulse text-red-500 font-bold">ACTIVE RESEARCH</span>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-4 border-t border-green-900 text-sm text-gray-500 animate-pulse">
+                _ cursor waiting for input...
+            </div>
+        </div>
+
+    </body>
 </html>
