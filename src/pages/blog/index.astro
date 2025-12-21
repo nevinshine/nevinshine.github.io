@@ -1,114 +1,49 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
+const base = '/my-portfolio';
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+    <head>
+        <BaseHead title="Research Logbook | Nevin Shine" description="Daily DevSecOps and Security Research logs" />
+    </head>
+    <body class="bg-[#050505] text-gray-300 font-sans min-h-screen flex justify-center selection:bg-green-900 selection:text-white">
+        <div class="w-full max-w-4xl px-6 py-16">
+
+            <a href={base} class="text-[10px] font-mono text-green-500 hover:text-white transition-colors mb-12 block uppercase tracking-widest no-underline">
+                [ ← Back to Terminal ]
+            </a>
+
+            <header class="mb-16 border-l-2 border-green-500 pl-6">
+                <h1 class="text-5xl font-bold text-white tracking-tighter mb-2">Research_Logbook</h1>
+                <p class="text-sm text-neutral-500 font-mono uppercase tracking-widest">
+                    Documenting 100 Days of DevSecOps & Kernel Security
+                </p>
+            </header>
+
+            <div class="space-y-4">
+                {posts.length > 0 ? posts.map((post) => (
+                    <a href={`${base}/blog/${post.slug}/`} class="flex justify-between items-center px-6 h-16 border border-neutral-900 hover:border-green-900/50 bg-neutral-900/10 group transition-all rounded-sm no-underline">
+                        <div class="flex items-center gap-8">
+                            <span class="text-[10px] font-mono text-neutral-600 group-hover:text-green-500 uppercase tracking-tighter">Day_{post.data.day}</span>
+                            <span class="text-base text-neutral-400 group-hover:text-white transition-colors font-medium">{post.data.title}</span>
+                        </div>
+                        <span class="text-[10px] text-neutral-700 uppercase font-mono group-hover:text-neutral-500">{post.data.pubDate.toLocaleDateString()}</span>
+                    </a>
+                )) : (
+                    <p class="text-sm font-mono text-neutral-700 uppercase tracking-widest italic">No transmission logs found in archive.</p>
+                )}
+            </div>
+
+            <footer class="mt-20 pt-10 text-center border-t border-neutral-900">
+                <p class="text-[10px] text-neutral-700 font-mono tracking-widest uppercase italic">Unauthorized access to draft logs is restricted.</p>
+            </footer>
+        </div>
+    </body>
 </html>
