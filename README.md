@@ -60,6 +60,3 @@ npm run build
 ## License
 
 Copyright © 2026 Nevin Shine. All rights reserved.
-
-
-```
