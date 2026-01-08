@@ -1,62 +1,65 @@
-# Astro Starter Kit: Blog
+# Nevin Shine | Systems Security Research Engineer
 
-```sh
-npm create astro@latest -- --template blog
+This repository contains the source code for the personal research portfolio and documentation hub of Nevin Shine. It serves as a centralized index for investigations into Linux runtime verification, syscall interception, and behavioral anomaly detection.
+
+## Project Overview
+
+The site is designed with a minimalist, terminal-inspired aesthetic to reflect a focus on low-level systems engineering. It functions as a digital dossier, linking to active research artifacts, technical documentation, and academic records.
+
+### Core Research Areas
+* **Runtime Verification:** Active defense systems using Linux `ptrace` and kernel interfaces.
+* **Syscall Interception:** Deep introspection of process behavior and argument extraction.
+* **Anomaly Detection:** Behavioral modeling using statistical and weightless neural network approaches.
+
+## Architecture
+
+This project is built as a static site for maximum performance and security.
+
+* **Framework:** Astro (Static Site Generation)
+* **Styling:** Tailwind CSS
+* **Type Safety:** TypeScript
+* **Deployment:** GitHub Pages
+
+## Local Development
+
+To clone and run this project locally:
+
+### 1. Installation
+Install the required dependencies:
+
+```bash
+npm install
+
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### 2. Development Server
 
-Features:
+Start the local development server at `localhost:4321`:
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+```bash
+npm run dev
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### 3. Production Build
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Build the project for production deployment (outputs to `./dist/`):
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+```bash
+npm run build
 
-Any static assets, like images, can be placed in the `public/` directory.
+```
 
-## 🧞 Commands
+## Project Structure
 
-All commands are run from the root of the project, from a terminal:
+* `src/pages/`: Contains the route definitions and main entry points.
+* `src/components/`: Reusable UI components (Project Cards, Headers).
+* `src/layouts/`: Global layout definitions.
+* `public/`: Static assets (CV, images).
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## License
 
-## 👀 Want to learn more?
+Copyright © 2026 Nevin Shine. All rights reserved.
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+```
