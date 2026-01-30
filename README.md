@@ -1,4 +1,4 @@
-# Nevin Shine | Systems Security Research Engineer
+# Nevin Shine | Undergraduate Systems Security Researcher
 
 This repository contains the source code for the personal research portfolio and documentation hub of Nevin Shine. It serves as a centralized index for investigations into Linux runtime verification, syscall interception, and behavioral anomaly detection.
 
