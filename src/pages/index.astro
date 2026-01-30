@@ -9,7 +9,7 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
 <!doctype html>
 <html lang="en">
     <head>
-        <BaseHead title="Nevin Shine | Systems Security Research Engineer" description="Linux Runtime Verification & Anomaly Detection" />
+        <BaseHead title="Nevin Shine | Undergraduate Systems Researcher" description="Linux Runtime Defense, eBPF & AI Safety" />
     </head>
     <body class="bg-[#050505] text-gray-300 font-sans min-h-screen flex justify-center selection:bg-green-900 selection:text-white">
         <div class="w-full max-w-4xl px-6 py-16">
@@ -26,9 +26,9 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
                 <div>
                     <h1 class="text-5xl md:text-6xl font-bold text-white tracking-tighter mb-4">Nevin Shine</h1>
                     <p class="text-xl text-neutral-400 font-light max-w-lg leading-relaxed">
-                        Systems Security Research Engineer <span class="text-neutral-700 mx-2">/</span> Linux Kernel Interfaces
+                        Undergraduate Systems Security Researcher <span class="text-neutral-700 mx-2">/</span> Kernel Defense
                     </p>
-                    <p class="text-sm text-neutral-500 mt-2 font-mono">Focus: Runtime Verification, ptrace Interception & eBPF</p>
+                    <p class="text-sm text-neutral-500 mt-2 font-mono">Focus: eBPF, Runtime Enforcement & AI Safety</p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3">
@@ -58,8 +58,8 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
                     <span class="text-sm text-gray-300 font-mono">Python / WiSARD</span>
                 </div>
                 <div class="bg-[#050505] p-4">
-                    <span class="block text-[10px] text-neutral-600 mb-1 font-bold font-mono">DOMAIN</span>
-                    <span class="text-sm text-gray-300 font-mono">Runtime Verification</span>
+                    <span class="block text-[10px] text-neutral-600 mb-1 font-bold font-mono">ARCHITECTURE</span>
+                    <span class="text-sm text-gray-300 font-mono">TELOS Runtime</span>
                 </div>
                 <div class="bg-[#050505] p-4">
                     <span class="block text-[10px] text-neutral-600 mb-1">STATUS</span>
@@ -69,22 +69,31 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
 
             <section class="mb-24">
                 <h2 class="text-xs font-bold text-green-500 mb-8 flex items-center tracking-widest uppercase">// Research Tracks <span class="ml-4 h-px bg-neutral-800 flex-grow"></span></h2>
+                
+                <div class="mb-8 p-6 border border-neutral-800 bg-neutral-900/30">
+                    <h3 class="text-lg font-bold text-white mb-2 font-mono">TELOS: Agentic Security Runtime</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed">
+                        A split-plane defense architecture preventing Indirect Prompt Injection and Data Exfiltration in Autonomous AI Agents.
+                        It bridges the "Semantic Gap" by verifying high-level intent (Cortex) and enforcing it via Kernel (Core) and Network (Edge) boundaries.
+                    </p>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
                    <ProjectCard 
-                        title="Sentinel Runtime (Host)" 
-                        description="M3.4 Final Artifact. A ptrace-based closed-loop control system. Features vfork tracking, semantic path mapping, and behavioral blocking." 
-                        tags={['C', 'ptrace', 'Python', 'Cognitive Engine']} 
+                        title="Sentinel (TELOS Core)" 
+                        description="M3.4 Active. The Kernel-Level Bodyguard. Detects and blocks malicious syscalls (execve, open) using ptrace/LSM hooks to prevent unauthorized execution by compromised agents." 
+                        tags={['C', 'LSM Hooks', 'ptrace', 'Host Defense']} 
                         link="https://github.com/nevinshine/sentinel-runtime" 
-                        status="M3.4 Active" 
+                        status="M3.4 Stable" 
                     />
 
                     <ProjectCard 
-                        title="Hyperion (Network)" 
-                        description="M4.6 Visual Dynamic Engine. A split-plane eBPF/XDP firewall featuring dynamic policy injection, ring-buffer telemetry, and zero-downtime live reloading via Go controller." 
-                        tags={['eBPF', 'XDP', 'Go', 'Dynamic Policy']} 
+                        title="Hyperion (TELOS Edge)" 
+                        description="M4.6 Active. The Network Border Patrol. A high-speed eBPF/XDP firewall that drops malicious packets at the NIC (O(1)) before they touch the OS stack." 
+                        tags={['eBPF', 'XDP', 'Go', 'Network Defense']} 
                         link="https://github.com/nevinshine/hyperion-xdp" 
-                        status="M4.6 Production" 
+                        status="M4.6 Stable" 
                     />
                     
                 </div>
@@ -109,3 +118,4 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
         </div>
     </body>
 </html>
+
