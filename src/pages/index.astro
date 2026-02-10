@@ -9,7 +9,7 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
 <!doctype html>
 <html lang="en">
     <head>
-        <BaseHead title="Nevin Shine | Undergraduate Systems Researcher" description="Linux Runtime Defense, eBPF & AI Safety" />
+        <BaseHead title="Nevin Shine | Systems Security Researcher" description="Linux Kernel Defense, eBPF-LSM & Agentic Security" />
     </head>
     <body class="bg-[#050505] text-gray-300 font-sans min-h-screen flex justify-center selection:bg-green-900 selection:text-white">
         <div class="w-full max-w-4xl px-6 py-16">
@@ -26,9 +26,9 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
                 <div>
                     <h1 class="text-5xl md:text-6xl font-bold text-white tracking-tighter mb-4">Nevin Shine</h1>
                     <p class="text-xl text-neutral-400 font-light max-w-lg leading-relaxed">
-                        Undergraduate Systems Security Researcher <span class="text-neutral-700 mx-2">/</span> Kernel Defense
+                        Systems Security Researcher <span class="text-neutral-700 mx-2">/</span> Linux Kernel Defense
                     </p>
-                    <p class="text-sm text-neutral-500 mt-2 font-mono">Focus: eBPF, Runtime Enforcement & AI Safety</p>
+                    <p class="text-sm text-neutral-500 mt-2 font-mono">Focus: eBPF-LSM, Runtime Enforcement & AI Safety</p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3">
@@ -51,11 +51,11 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
             <div class="mb-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-900 border border-neutral-900">
                 <div class="bg-[#050505] p-4">
                     <span class="block text-[10px] text-neutral-600 mb-1">CORE</span>
-                    <span class="text-sm text-gray-300 font-mono">Linux / C / eBPF</span>
+                    <span class="text-sm text-gray-300 font-mono">Linux Kernel / C / eBPF</span>
                 </div>
                 <div class="bg-[#050505] p-4">
                     <span class="block text-[10px] text-neutral-600 mb-1 font-bold">ANALYSIS</span>
-                    <span class="text-sm text-gray-300 font-mono">Python / WiSARD</span>
+                    <span class="text-sm text-gray-300 font-mono">Python / WiSARD / XDP</span>
                 </div>
                 <div class="bg-[#050505] p-4">
                     <span class="block text-[10px] text-neutral-600 mb-1 font-bold font-mono">ARCHITECTURE</span>
@@ -63,7 +63,7 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
                 </div>
                 <div class="bg-[#050505] p-4">
                     <span class="block text-[10px] text-neutral-600 mb-1">STATUS</span>
-                    <span class="text-sm text-gray-300 font-mono">Active Defense Online</span>
+                    <span class="text-sm text-gray-300 font-mono">M8.2 Active Research</span>
                 </div>
             </div>
 
@@ -73,7 +73,7 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
                 <div class="mb-8 p-6 border border-neutral-800 bg-neutral-900/30">
                     <h3 class="text-lg font-bold text-white mb-2 font-mono">TELOS: Agentic Security Runtime</h3>
                     <p class="text-sm text-neutral-400 leading-relaxed">
-                        A split-plane defense architecture preventing Indirect Prompt Injection and Data Exfiltration in Autonomous AI Agents.
+                        A split-plane defense architecture preventing <strong>Indirect Prompt Injection</strong> and <strong>Data Exfiltration</strong> in Autonomous AI Agents.
                         It bridges the "Semantic Gap" by verifying high-level intent (Cortex) and enforcing it via Kernel (Core) and Network (Edge) boundaries.
                     </p>
                 </div>
@@ -81,17 +81,17 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
                    <ProjectCard 
-                        title="Sentinel (TELOS Core)" 
-                        description="M3.4 Active. The Kernel-Level Bodyguard. Detects and blocks malicious syscalls (execve, open) using ptrace/LSM hooks to prevent unauthorized execution by compromised agents." 
-                        tags={['C', 'LSM Hooks', 'ptrace', 'Host Defense']} 
+                        title="Sentinel Runtime (TELOS Core)" 
+                        description="M8.2 Active. The Kernel-Level Bodyguard. A pure eBPF-LSM engine featuring Inode-Based Enforcement and Atomic Inheritance Tracking. Now includes a Live TUI Dashboard for real-time fork storm visualization with <5µs latency." 
+                        tags={['eBPF-LSM', 'C', 'TUI', 'Kernel Defense']} 
                         link="https://github.com/nevinshine/sentinel-runtime" 
-                        status="M3.4 Stable" 
+                        status="M8.2 Active" 
                     />
 
                     <ProjectCard 
-                        title="Hyperion (TELOS Edge)" 
-                        description="M5.0 Active. The Network Border Patrol. A high-speed eBPF/XDP firewall that drops malicious packets at the NIC (O(1)) before they touch the OS stack. Now features stateful flow tracking, split-packet evasion detection, and enhanced telemetry." 
-                        tags={['eBPF', 'XDP', 'Go', 'Network Defense']} 
+                        title="Hyperion XDP (TELOS Edge)" 
+                        description="M5.0 Stable. The Network Border Patrol. A high-speed XDP firewall that drops malicious packets at the NIC (O(1)) before sk_buff allocation. Now features Ring Buffer telemetry and Zero-Downtime policy reloads." 
+                        tags={['XDP', 'eBPF', 'Go/Cilium', 'Network Defense']} 
                         link="https://github.com/nevinshine/hyperion-xdp" 
                         status="M5.0 Stable" 
                     />
@@ -117,4 +117,3 @@ const dossierLink = "https://nevinshine.github.io/system-security-research-dossi
         </div>
     </body>
 </html>
-
