@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevin Shine | Systems Security</title>
+    <!-- Custom [n] Terminal Favicon rendered directly via SVG data URI -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.8em%22 font-size=%2280%22 font-family=%22monospace%22 font-weight=%22800%22 fill=%22black%22>[n]</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: 'rgb(var(--color-text) / <alpha-value>)', /* Dynamically pulls from theme */
+                    },
+                    fontFamily: {
+                        sans: ['"JetBrains Mono"', 'monospace'],
+                        mono: ['"JetBrains Mono"', 'monospace'], /* Forces everything into the terminal font */
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-text: 184 184 255; /* #B8B8FF */
+            --color-bg-hex: #0000D1;
+        }
+        [data-theme="hacker"] {
+            --color-text: 0 255 65; 
+            --color-bg-hex: #0a0a0a;
+        }
+        [data-theme="gruvbox"] {
+            --color-text: 235 219 178; 
+            --color-bg-hex: #282828;
+        }
+        [data-theme="cyber"] {
+            --color-text: 255 113 206; 
+            --color-bg-hex: #0f001a;
+        }
+        [data-theme="ghost"] {
+            --color-text: 224 224 224; 
+            --color-bg-hex: #121212;
+        }
+        [data-theme="blood"] {
+            --color-text: 255 77 77; 
+            --color-bg-hex: #1a0505;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--color-bg-hex);
+            color: rgb(var(--color-text));
+            transition: background-color 0.4s ease;
+        }
+
+        /* Flowing Dots Animation */
+        @keyframes flowDots {
+            from { -webkit-mask-position: 0 center; mask-position: 0 center; }
+            to { -webkit-mask-position: -24px center; mask-position: -24px center; }
+        }
+
+        /* Dotted line separator using CSS Masks */
+        .dotted-divider {
+            background-color: rgb(var(--color-text));
+            opacity: 0.4;
+            -webkit-mask-image: linear-gradient(to right, black 50%, transparent 50%);
+            -webkit-mask-size: 6px 2px;
+            -webkit-mask-repeat: repeat-x;
+            -webkit-mask-position: center;
+            mask-image: linear-gradient(to right, black 50%, transparent 50%);
+            mask-size: 6px 2px;
+            mask-repeat: repeat-x;
+            mask-position: center;
+            height: 2px;
+            width: 100%;
+            animation: flowDots 1.5s linear infinite; 
+        }
+
+        ::selection {
+            background-color: rgb(var(--color-text));
+            color: var(--color-bg-hex);
+        }
+
+        /* Custom Terminal Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-bg-hex); }
+        ::-webkit-scrollbar-thumb { background: rgb(var(--color-text)); }
+        ::-webkit-scrollbar-thumb:hover { opacity: 0.8; }
+
+        /* Silky Smooth Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Smooth underline animation for links */
+        .hover-underline { position: relative; }
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1.5px;
+            bottom: -2px;
+            left: 0;
+            background-color: rgb(var(--color-text));
+            transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0.6;
+        }
+        .hover-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Soft pulsing animation for accent marks */
+        .pulse-soft { animation: pulseSoft 3s ease-in-out infinite; }
+        @keyframes pulseSoft {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Subtle ambient hardware glitch */
+        .ambient-glitch { display: inline-block; animation: glitch 5s infinite; }
+        @keyframes glitch {
+            0%, 96%, 98%, 100% { transform: translate(0, 0); opacity: 1; }
+            97% { transform: translate(-2px, 1px); opacity: 0.8; }
+            99% { transform: translate(2px, -1px); opacity: 0.9; }
+        }
+
+        /* Interactive "Breathing Brackets" */
+        .bracket-link::before { content: '['; display: inline-block; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .bracket-link::after { content: ']'; display: inline-block; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .bracket-link:hover::before, .group:hover .bracket-link::before { transform: translateX(-3px); }
+        .bracket-link:hover::after, .group:hover .bracket-link::after { transform: translateX(3px); }
+
+        /* Animated Terminal Loader Cursor */
+        .hover-spin::after {
+            content: '->';
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+        .group:hover .hover-spin::after {
+            animation: spinChars 0.4s infinite step-end;
+            transform: translateX(4px);
+        }
+        @keyframes spinChars {
+            0% { content: '[|]'; }
+            25% { content: '[/]'; }
+            50% { content: '[-]'; }
+            75% { content: '[x]'; }
+            100% { content: '[|]'; }
+        }
+
+        /* CRT Channel Switch Flicker */
+        .crt-flicker-anim { animation: theme-switch-flicker 0.25s ease-out; }
+        @keyframes theme-switch-flicker {
+            0% { transform: scale(1) skewX(0); filter: contrast(1); opacity: 1; }
+            20% { transform: scale(1.02) skewX(-2deg); filter: contrast(1.5) hue-rotate(-20deg); opacity: 0.8; text-shadow: 4px 0 red, -4px 0 cyan; }
+            40% { transform: scale(0.98) skewX(2deg); filter: contrast(2) hue-rotate(20deg); opacity: 0.9; text-shadow: -4px 0 red, 4px 0 cyan; }
+            60% { transform: scale(1.01) skewX(-1deg); filter: contrast(1.2); opacity: 1; }
+            100% { transform: scale(1) skewX(0); filter: contrast(1); opacity: 1; text-shadow: none; }
+        }
+
+        /* Physical Click Chromatic Aberration */
+        .active-glitch:active { animation: click-glitch 0.2s infinite; }
+        @keyframes click-glitch {
+            0% { transform: translate(1px, 1px); text-shadow: -2px 0 red, 2px 0 cyan; }
+            50% { transform: translate(-1px, -1px); text-shadow: 2px 0 red, -2px 0 cyan; }
+            100% { transform: translate(1px, -1px); text-shadow: -2px 0 red, 2px 0 cyan; }
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            background-color: var(--color-bg-hex);
+            color: rgb(var(--color-text));
+            transition: opacity 0.8s cubic-bezier(0.8, 0, 0.2, 1), visibility 0.8s;
+        }
+        body.loaded #preloader {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen py-16 px-6 sm:py-24 sm:px-12 flex justify-center overflow-y-scroll overflow-x-hidden">
+
+    <!-- Initialization Overlay (Preloader) -->
+    <div id="preloader" class="fixed inset-0 z-[9999] flex items-center justify-center">
+        <div class="font-mono font-extrabold text-5xl sm:text-6xl text-black/90 group cursor-default">
+            <span class="bracket-link inline-block pulse-soft"><span id="preloader-logo">_</span></span>
+        </div>
+    </div>
+
+    <main class="w-full max-w-3xl text-black">
+        
+        <!-- Header -->
+        <header class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-6 mb-20 reveal">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight mb-1 scramble-text lowercase">nevin shine</h1>
+                <p class="text-[16px] italic text-black/90 font-semibold lowercase">systems security researcher <span class="font-mono text-[14px] not-italic opacity-50 ml-2">// grad 2028</span></p>
+                <p class="text-[14px] text-black/70 mt-0.5 font-semibold lowercase ambient-glitch">kernel panic enthusiast</p>
+            </div>
+            
+            <!-- Links (Top Right) - Breathing Bracket Icons -->
+            <div class="flex gap-4 items-center text-black/70">
+                <a href="#" id="theme-toggle" aria-label="Toggle Theme" class="bracket-link font-mono font-extrabold text-[16px] hover:text-black transition-all duration-300 lowercase" title="Cycle Theme"><span class="scramble-text">t</span></a>
+                <a href="https://github.com/nevinshine" target="_blank" aria-label="GitHub" class="bracket-link font-mono font-extrabold text-[16px] hover:text-black transition-all duration-300 lowercase" title="GitHub"><span class="scramble-text">g</span></a>
+                <a href="https://www.linkedin.com/in/nevin-shine-b403b932b/" target="_blank" aria-label="LinkedIn" class="bracket-link font-mono font-extrabold text-[16px] hover:text-black transition-all duration-300 lowercase" title="LinkedIn"><span class="scramble-text">l</span></a>
+                <a href="mailto:nevinshine05@outlook.com" aria-label="Contact" class="bracket-link font-mono font-extrabold text-[16px] hover:text-black transition-all duration-300 lowercase" title="Contact"><span class="scramble-text">@</span></a>
+            </div>
+        </header>
+
+        <!-- Intro & CV Actions -->
+        <section class="mb-16 reveal">
+            <h2 class="text-[18px] font-extrabold mb-4 flex items-center gap-2 lowercase">
+                <span class="text-black/70 font-mono font-extrabold text-[20px] pulse-soft leading-none">+</span> 
+                <span class="scramble-text">system identity loaded</span>
+            </h2>
+            <p class="text-[16px] leading-relaxed text-black/90 font-semibold max-w-2xl mb-8 lowercase">
+                focusing on unified runtime and network defense. targeting cross-layer intent enforcement & zero-trust architecture to close the semantic-to-execution gap.
+            </p>
+            
+            <!-- Explicit CV / Dossier Buttons -->
+            <div class="flex flex-wrap items-center gap-4 lowercase">
+                <a href="./assets/nevin_shine_cv.pdf" target="_blank" class="inline-flex items-center gap-2 font-extrabold text-[15px] text-black bg-black/10 px-5 py-2.5 rounded-xl hover:bg-black/20 transition-all duration-300 active-glitch group">
+                    <span class="font-mono font-extrabold text-[16px] leading-none bracket-link">↓</span> 
+                    <span class="scramble-text">download cv</span>
+                </a>
+                <a href="#" class="inline-flex items-center gap-2 font-extrabold text-[15px] text-black/70 hover:text-black px-4 py-2.5 rounded-xl hover:bg-black/5 transition-all duration-300 active-glitch group">
+                    <span class="font-mono font-extrabold text-[16px] leading-none bracket-link">d</span> 
+                    <span class="scramble-text">view dossier</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-4 my-14 reveal">
+            <span class="text-[12px] text-black/70 font-extrabold whitespace-nowrap lowercase tracking-widest flex items-center gap-1.5">
+                <span class="font-mono font-extrabold text-[15px] pulse-soft leading-none">+</span> <span class="scramble-text">sentinel stack</span>
+            </span>
+            <div class="dotted-divider"></div>
+        </div>
+
+        <!-- Stack -->
+        <section class="space-y-6 mb-24 lowercase">
+            
+            <div class="reveal group block p-4 sm:p-5 -ml-4 sm:-ml-5 rounded-2xl hover:bg-black/5 transition-all duration-300 cursor-pointer">
+                <h3 class="font-extrabold text-[17px] mb-2 flex flex-wrap items-baseline gap-2">
+                    <span class="scramble-text">sentinel-runtime</span> 
+                    <span class="text-[13px] text-black/70 font-semibold font-mono">— ring 0</span>
+                </h3>
+                <p class="text-[15px] text-black/90 font-semibold leading-relaxed mb-3 max-w-2xl">
+                    active (m8.2). pure ebpf-lsm engine featuring recursive process bloodline tracking and atomic inheritance for real-time protection.
+                </p>
+                <a href="https://github.com/nevinshine/sentinel-runtime" target="_blank" class="inline-flex items-center gap-1.5 text-[14px] font-extrabold text-black/70 group-hover:text-black transition-colors">
+                    read specs <span class="font-mono hover-spin inline-block text-[14px]"></span>
+                </a>
+            </div>
+
+            <div class="reveal group block p-4 sm:p-5 -ml-4 sm:-ml-5 rounded-2xl hover:bg-black/5 transition-all duration-300 cursor-pointer">
+                <h3 class="font-extrabold text-[17px] mb-2 flex flex-wrap items-baseline gap-2">
+                    <span class="scramble-text">hyperion-xdp</span> 
+                    <span class="text-[13px] text-black/70 font-semibold font-mono">— wire</span>
+                </h3>
+                <p class="text-[15px] text-black/90 font-semibold leading-relaxed mb-3 max-w-2xl">
+                    active (m5.0). network border patrol achieving ~65 gbps throughput with zero-copy telemetry and ebpf-powered packet filtering.
+                </p>
+                <a href="https://github.com/nevinshine/hyperion-xdp" target="_blank" class="inline-flex items-center gap-1.5 text-[14px] font-extrabold text-black/70 group-hover:text-black transition-colors">
+                    read specs <span class="font-mono hover-spin inline-block text-[14px]"></span>
+                </a>
+            </div>
+
+            <div class="reveal group block p-4 sm:p-5 -ml-4 sm:-ml-5 rounded-2xl hover:bg-black/5 transition-all duration-300 cursor-pointer">
+                <h3 class="font-extrabold text-[17px] mb-2 flex flex-wrap items-baseline gap-2">
+                    <span class="scramble-text">sentinel-cc</span>
+                    <span class="text-[13px] text-black/70 font-semibold font-mono">— compile</span>
+                </h3>
+                <p class="text-[15px] text-black/90 font-semibold leading-relaxed mb-3 max-w-2xl">
+                    llvm-based policy-carrying code featuring phase 2 deep cfi and aslr-aware enforcement for compile-time security guarantees.
+                </p>
+                <a href="https://github.com/nevinshine/sentinel-cc" target="_blank" class="inline-flex items-center gap-1.5 text-[14px] font-extrabold text-black/70 group-hover:text-black transition-colors">
+                    read specs <span class="font-mono hover-spin inline-block text-[14px]"></span>
+                </a>
+            </div>
+
+            <div class="reveal group block p-4 sm:p-5 -ml-4 sm:-ml-5 rounded-2xl hover:bg-black/5 transition-all duration-300 cursor-pointer">
+                <h3 class="font-extrabold text-[17px] mb-2 flex flex-wrap items-baseline gap-2">
+                    <span class="scramble-text">telos-runtime</span>
+                    <span class="text-[13px] text-black/70 font-semibold font-mono">— ring 0</span>
+                </h3>
+                <p class="text-[15px] text-black/90 font-semibold leading-relaxed mb-3 max-w-2xl">
+                    loading (80%). lsm · intent correlation.
+                </p>
+                <a href="https://github.com/nevinshine/telos-runtime" target="_blank" class="inline-flex items-center gap-1.5 text-[14px] font-extrabold text-black/70 group-hover:text-black transition-colors">
+                    read specs <span class="font-mono hover-spin inline-block text-[14px]"></span>
+                </a>
+            </div>
+
+            <div class="reveal group block p-4 sm:p-5 -ml-4 sm:-ml-5 rounded-2xl hover:bg-black/5 transition-all duration-300 cursor-pointer">
+                <h3 class="font-extrabold text-[17px] mb-2 flex flex-wrap items-baseline gap-2">
+                    <span class="scramble-text">sentinel-vmi</span>
+                    <span class="text-[13px] text-black/70 font-semibold font-mono">— ring -1</span>
+                </h3>
+                <p class="text-[15px] text-black/90 font-semibold leading-relaxed mb-3 max-w-2xl">
+                    testing (50%). amd-v · npt guard introspection.
+                </p>
+                <a href="https://github.com/nevinshine/sentinel-vmi" target="_blank" class="inline-flex items-center gap-1.5 text-[14px] font-extrabold text-black/70 group-hover:text-black transition-colors">
+                    read specs <span class="font-mono hover-spin inline-block text-[14px]"></span>
+                </a>
+            </div>
+
+            <div class="reveal group block p-4 sm:p-5 -ml-4 sm:-ml-5 rounded-2xl border border-dashed border-black/20 hover:border-black/40 hover:bg-black/5 transition-all duration-300 cursor-pointer mt-4">
+                <h3 class="font-extrabold text-[17px] mb-2 flex flex-wrap items-baseline gap-2 text-black/70 group-hover:text-black">
+                    <span class="scramble-text">new project: tbd</span>
+                    <span class="text-[13px] text-black/50 font-semibold font-mono">— later 2026</span>
+                </h3>
+                <p class="text-[15px] text-black/70 font-semibold leading-relaxed italic max-w-2xl">
+                    adaptive kernel-level defense systems for space cybersecurity. research initiative for satellite communication security.
+                </p>
+            </div>
+            
+        </section>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-4 my-14 reveal">
+            <span class="text-[12px] text-black/70 font-extrabold whitespace-nowrap lowercase tracking-widest flex items-center gap-1.5">
+                <span class="font-mono font-extrabold text-[15px] pulse-soft leading-none">+</span> <span class="scramble-text">arsenal</span>
+            </span>
+            <div class="dotted-divider"></div>
+        </div>
+
+        <!-- Arsenal -->
+        <section class="space-y-4 mb-20 lowercase">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 reveal group p-4 -ml-4 rounded-xl hover:bg-black/5 transition-all duration-300">
+                <h3 class="font-extrabold text-[16px] sm:w-56 shrink-0 flex items-center gap-3">
+                    <span class="font-mono font-extrabold text-[16px] text-black/70 group-hover:text-black transition-all duration-300 bracket-link"><span class="scramble-text">l</span></span>
+                    languages
+                </h3>
+                <p class="text-[14px] text-black/90 font-semibold">c, c++, rust, go, python, sql, java, bash</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 reveal group p-4 -ml-4 rounded-xl hover:bg-black/5 transition-all duration-300">
+                <h3 class="font-extrabold text-[16px] sm:w-56 shrink-0 flex items-center gap-3">
+                    <span class="font-mono font-extrabold text-[16px] text-black/70 group-hover:text-black transition-all duration-300 bracket-link"><span class="scramble-text">k</span></span>
+                    low-level
+                </h3>
+                <p class="text-[14px] text-black/90 font-semibold">ebpf, xdp, lsm, llvm pass dev, x86_64 asm, kernel hooking</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 reveal group p-4 -ml-4 rounded-xl hover:bg-black/5 transition-all duration-300">
+                <h3 class="font-extrabold text-[16px] sm:w-56 shrink-0 flex items-center gap-3">
+                    <span class="font-mono font-extrabold text-[16px] text-black/70 group-hover:text-black transition-all duration-300 bracket-link"><span class="scramble-text">r</span></span>
+                    research
+                </h3>
+                <p class="text-[14px] text-black/90 font-semibold">cfi, aslr evasion defense, prompt injection mitigation</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 reveal group p-4 -ml-4 rounded-xl hover:bg-black/5 transition-all duration-300">
+                <h3 class="font-extrabold text-[16px] sm:w-56 shrink-0 flex items-center gap-3">
+                    <span class="font-mono font-extrabold text-[16px] text-black/70 group-hover:text-black transition-all duration-300 bracket-link"><span class="scramble-text">f</span></span>
+                    forensics
+                </h3>
+                <p class="text-[14px] text-black/90 font-semibold">gdb, bpftool, strace, pahole, objdump, docker</p>
+            </div>
+
+        </section>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-4 my-14 reveal">
+            <span class="text-[12px] text-black/70 font-extrabold whitespace-nowrap lowercase tracking-widest flex items-center gap-1.5">
+                <span class="font-mono font-extrabold text-[15px] pulse-soft leading-none">+</span> <span class="scramble-text">/dev/random</span>
+            </span>
+            <div class="dotted-divider"></div>
+        </div>
+
+        <!-- Fun Section (/dev/random) -->
+        <section class="mb-20 lowercase reveal">
+            <div class="border border-dashed border-black/20 rounded-2xl p-6 sm:p-8 hover:border-black/40 hover:bg-black/5 transition-all duration-500 space-y-6">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 group">
+                    <h3 class="font-extrabold text-[16px] sm:w-56 shrink-0 flex items-center gap-3">
+                        <span class="font-mono font-extrabold text-[16px] text-black/70 group-hover:text-black transition-all duration-300 bracket-link"><span class="scramble-text">~</span></span>
+                        afk status
+                    </h3>
+                    <p class="text-[14px] text-black/90 font-semibold">tinkering with homelabs, deep sci-fi lore, and making terrible coffee</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 group">
+                    <h3 class="font-extrabold text-[16px] sm:w-56 shrink-0 flex items-center gap-3">
+                        <span class="font-mono font-extrabold text-[16px] text-black/70 group-hover:text-black transition-all duration-300 bracket-link"><span class="scramble-text">♪</span></span>
+                        frequencies
+                    </h3>
+                    <p class="text-[14px] text-black/90 font-semibold">bouncing between jeremias, brutalismus 3000, and pnb rock</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 group">
+                    <h3 class="font-extrabold text-[16px] sm:w-56 shrink-0 flex items-center gap-3">
+                        <span class="font-mono font-extrabold text-[16px] text-black/70 group-hover:text-black transition-all duration-300 bracket-link"><span class="scramble-text">*</span></span>
+                        hardware
+                    </h3>
+                    <p class="text-[14px] text-black/90 font-semibold">building custom split keyboards with way too many layers</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-24 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] font-semibold text-black/70 pb-12 border-t border-black/10 reveal lowercase">
+            <a href="https://www.google.com/maps/place/Nuremberg/" target="_blank" class="flex items-center gap-2 font-extrabold text-[14px] hover:text-black transition-colors">
+                <span class="font-mono font-extrabold text-[15px] animate-pulse" style="animation-duration: 2s;">[!]</span>
+                nürnberg
+            </a>
+            <div class="flex items-center gap-4">
+                <span class="font-extrabold">built in 2026</span>
+                <span>•</span>
+                <a href="https://github.com/nevinshine" class="hover:text-black font-extrabold transition-colors hover-underline">source code</a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Scroll Animations & Theme Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- Hacker Text Scramble Effect ---
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+            const scrambleElements = document.querySelectorAll(".scramble-text");
+
+            function scrambleElement(el) {
+                if (el.dataset.isScrambling === "true") return;
+                el.dataset.isScrambling = "true";
+                
+                if (!el.dataset.value) el.dataset.value = el.innerText;
+                let iteration = 0;
+                clearInterval(el.dataset.interval);
+                
+                el.dataset.interval = setInterval(() => {
+                    el.innerText = el.innerText
+                        .split("")
+                        .map((letter, index) => {
+                            if(index < iteration) {
+                                return el.dataset.value[index];
+                            }
+                            return letters[Math.floor(Math.random() * letters.length)];
+                        })
+                        .join("");
+                    
+                    if(iteration >= el.dataset.value.length){ 
+                        clearInterval(el.dataset.interval);
+                        el.dataset.isScrambling = "false";
+                    }
+                    iteration += 1 / 3; 
+                }, 30);
+            }
+
+            scrambleElements.forEach(el => {
+                el.dataset.value = el.innerText;
+                el.addEventListener("mouseover", () => scrambleElement(el));
+                
+                // Expand hover area to parent element for small icons and links
+                const parent = el.closest('a') || el.closest('.bracket-link');
+                if (parent) {
+                    parent.addEventListener("mouseover", () => scrambleElement(el));
+                }
+            });
+
+            // --- Preloader Boot Sequence (Extended Decryption) ---
+            const preloaderLogo = document.getElementById('preloader-logo');
+            if(preloaderLogo) {
+                let bootIteration = -25; // Forces pure random character cycling for ~750ms
+                const bootInterval = setInterval(() => {
+                    preloaderLogo.innerText = "n"
+                        .split("")
+                        .map((letter, index) => {
+                            // Only lock onto 'n' once bootIteration reaches 0
+                            if(index < bootIteration) return "n";
+                            return letters[Math.floor(Math.random() * letters.length)];
+                        })
+                        .join("");
+                    
+                    if(bootIteration >= 1){ 
+                        clearInterval(bootInterval);
+                        // Add hover properties back once loaded
+                        preloaderLogo.classList.add('scramble-text'); 
+                        preloaderLogo.dataset.value = "n";
+                        preloaderLogo.addEventListener("mouseover", () => scrambleElement(preloaderLogo));
+                    }
+                    bootIteration += 1 / 2; 
+                }, 30);
+            }
+
+            // Wait 1.6 seconds for the "boot" sequence, then fade out and trigger reveals
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+                
+                // Delay the scroll observer slightly so items cascade IN after preloader fades
+                setTimeout(() => {
+                    const reveals = document.querySelectorAll('.reveal');
+                    reveals.forEach((el, index) => {
+                        if (index < 4) el.style.transitionDelay = `${index * 120}ms`;
+                        observer.observe(el);
+                    });
+                }, 200); 
+
+            }, 1600);
+
+            // --- Theme Cycling Logic & Glitch ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const themes = ['default', 'hacker', 'gruvbox', 'cyber', 'ghost', 'blood'];
+            let currentTheme = 0;
+
+            function switchTheme() {
+                currentTheme = (currentTheme + 1) % themes.length;
+                document.documentElement.setAttribute('data-theme', themes[currentTheme]);
+                
+                // Trigger CRT flicker on body
+                document.body.classList.remove('crt-flicker-anim');
+                void document.body.offsetWidth; // Force reflow to restart animation
+                document.body.classList.add('crt-flicker-anim');
+                
+                // Scramble the [t] button to confirm action visually
+                const tButtonSpan = themeToggle.querySelector('.scramble-text');
+                if(tButtonSpan) scrambleElement(tButtonSpan);
+            }
+
+            themeToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTheme();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key.toLowerCase() === 't' && document.activeElement.tagName !== 'INPUT') {
+                    switchTheme();
+                }
+            });
+
+            // --- Scroll Reveal Logic ---
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px', 
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        const scrambles = entry.target.querySelectorAll('.scramble-text');
+                        scrambles.forEach(scrambleElement);
+
+                        if (entry.target.classList.contains('scramble-text')) {
+                            scrambleElement(entry.target);
+                        }
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Note: Initial observation of '.reveal' elements is now handled in the Preloader timeout above!
+        });
+    </script>
+</body>
+</html>
